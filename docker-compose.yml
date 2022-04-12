@@ -19,7 +19,6 @@ services:
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - app-network
-
     #Nginx Service
     webserver:
         image: nginx:alpine
@@ -42,7 +41,7 @@ services:
         restart: unless-stopped
         tty: true
         ports:
-            - "33061:3306"
+            - "3307:3307"
         environment:
             MYSQL_DATABASE: cms
             MYSQL_USER: root
@@ -55,10 +54,32 @@ services:
         networks:
             - app-network
 
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        container_name: phpmyadmin
+        restart: always
+        ports:
+            # 8080 is the host port and 80 is the docker port
+            - "8080:80"
+        environment:
+            - PMA_ARBITRARY:1
+            - PMA_HOST:mysql
+            - MYSQL_USERNAME:root
+            - MYSQL_ROOT_PASSWORD:Aumet@123
+        depends_on:
+            - db
+        networks:
+            # define your network where all containers are connected to each other
+            - app-network
+        volumes:
+            # define directory path where you shall store your persistent data and config
+            # files of phpmyadmin
+            - ./docker/phpmyadmin
 #Docker Networks
 networks:
     app-network:
         driver: bridge
+
 #Volumes
 volumes:
     dbdata:

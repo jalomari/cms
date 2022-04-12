@@ -48,7 +48,7 @@ USER www
 
 RUN mkdir -p /var/www/storage/app/public
 
-RUN chmod 777  /var/html/storage -R
+RUN chmod 777  /var/www/storage -R
 
 RUN composer install
 

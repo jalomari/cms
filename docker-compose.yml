@@ -45,7 +45,7 @@ services:
         environment:
             MYSQL_DATABASE: cms
             MYSQL_USER: root
-            MYSQL_ROOT_PASSWORD: Aumet@123
+            MYSQL_ROOT_PASSWORD: Omari@123
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
         volumes:
@@ -65,16 +65,15 @@ services:
             - PMA_ARBITRARY:1
             - PMA_HOST:mysql
             - MYSQL_USERNAME:root
-            - MYSQL_ROOT_PASSWORD:Aumet@123
+            - MYSQL_ROOT_PASSWORD:Omari@123
         depends_on:
             - db
         networks:
             # define your network where all containers are connected to each other
             - app-network
-        volumes:
-            # define directory path where you shall store your persistent data and config
-            # files of phpmyadmin
-            - ./docker/phpmyadmin
+
+    redis:
+        image: 'redis:alpine'
 #Docker Networks
 networks:
     app-network:

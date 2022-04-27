@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y  \
         vim \
         unzip \
         git \
-        curl  \
+        curl \
+        nodejs npm \
     --no-install-recommends \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql -j$(nproc) gd
@@ -40,6 +41,13 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache
+
+# setup npm
+RUN npm install -g npm@latest
+
+RUN npm install
+
+RUN npm run
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
